@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Mural de Frases</title>
+    <link rel="stylesheet" href="css/cadastro.css"> 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap');
+    </style>
+</head>
+<body style="background-image: url(images/fundo.png);">
+
+    <main class="container">
+        <section class="cadastro-card">
+            
+            <div class="logo">
+                <img src="images/logo mural.png" alt="Logo" class="logo-img">
+            </div>
+            
+            <h1>Cadastro</h1> 
+            <p>Registre-se para compartilhar sua inspiração!</p>
+            
+            <form action="#" method="POST">
+                
+                <div class="campo">
+                    <label for="nome-apelido">Seu Nome/Apelido:</label>
+                    <input type="text" id="nome-apelido" name="nome-apelido" placeholder="Ex: Arthur Miguel" required>
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Crie sua senha" required>
+                </div>
+
+                <button type="submit" class="btn-cadastrar">
+                    Cadastrar
+                </button>
+            </form>
+            
+            <div class="login-area">
+                <a href="login.html" class="link-login">Já tem uma conta? Faça Login</a>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
