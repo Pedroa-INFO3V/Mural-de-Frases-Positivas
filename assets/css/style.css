@@ -75,7 +75,7 @@
 }
 
 #postagens{
-  width: 66.5%;
+  width: 65.7%;
   height: 100vh;
   position: relative;
   top: 100px;
@@ -91,6 +91,7 @@
   display: flex;
   flex-direction: row-reverse;
   color: white;
+  font-size: 25px;
 }
 
 .row {
@@ -128,28 +129,57 @@
 }
 
 .linha2{
-  width: 2px;
+  width: 1px;
   height: 100vh;
   background-color: white;
   position: relative;
-  left: 10px;
-  top: -280px;
+  left: 450px;
+  top: -780px;
 }
 
 .column {
   flex: 25%;
   max-width: 66.5%;
-  padding: 0 4px;
+  padding: 0 3px;
 }
 
-.column textarea {
+.column div {
   margin-top: 8px;
   vertical-align: middle;
-  width: 300px;
-  height: 250px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.column textarea{
   background-color: white;
   resize: none;
   overflow: hidden;
+  border: 0px;
+}
+
+.horario-curtidas {
+  display: flex !important;
+  flex-direction: row !important;    
+}
+
+.horario-curtidas h5, h6 {
+  margin: 0;                
+  opacity: 0.5;
+  align-items: flex-end;
+}
+
+.horario-curtidas .coracao {
+  color: red;           
+  cursor: pointer;   
+  margin-bottom: 5px;    
+  margin-right: 280px;
+}
+
+
+.linha3{
+  border: 1px solid grey;
+  margin-top: 5px;
 }
 
 @media (max-width: 800px) {
