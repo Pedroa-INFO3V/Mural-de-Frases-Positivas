@@ -15,38 +15,52 @@
         <div class="linha"></div>
         <nav id="menu">
             <ul>
-                <li>Perfil</li>
-                <li>Temas</li>
+                <li><a href="perfil.html">Perfil</a></li>
+                <li><a>Temas</a></li>
             </ul>
         </nav>
-        <div id="pesquisar">busque uma frase</div>
-        <i class="fa-solid fa-magnifying-glass lupa"></i>
-        <img src="images/logo mural.png" id="logo"></section>   
+        <input type="text" id="pesquisar" placeholder="Busque uma frase..."></input>
+        <a href=""><i class="fa-solid fa-magnifying-glass lupa"></i></a>
+        <a href="#header"><img src="images/logo mural.png" id="logo"></section></a>   
     </section>
 
-    <section id="hero">
+    <section id="postagens">
         <h1 style="color: #764300;" class="hum">Mural de Frases</h1>
-        <div class="postagem"></div>
+        <div id="container-filtro">
+            <i class="fa-solid fa-filter"></i>
+        </div>
+        <div class="postagem">
+            <h4>Nome do usuário</h4>
+            <span class="linha1"></span>
+            <form method="post" action="">
+                <textarea name="nome" class="caixa-postar" maxlength="250" placeholder="Compartilhe sua frase..."></textarea>
+                <div class="container-botao-postar">
+                    <button type="submit" style="align-self: flex-end; margin-top: 5px;" onclick="postar()">Postar</button>
+                </div>
+            </form>
+
+        </div>
         <div class="row"> 
             <div class="column">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
             </div>
 
             <div class="column">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
-                <img src="images/" style="width:100%">
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
+                <textarea readonly name="" id=""></textarea>
             </div>
+
+            <span class="linha2"></span>
     </section>
+
 </body>
 </html>
