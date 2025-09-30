@@ -21,6 +21,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-size: cover;
 }
 
 .cadastro-card {
@@ -29,7 +30,6 @@ body {
     padding: 90px 80px; 
     height: 100vh;
     width: 400px; 
-    
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;

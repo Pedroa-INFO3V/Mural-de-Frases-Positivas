@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,143 +8,133 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap');
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
 </head>
 <body style="background-color: #EFBC09;">
+    
     <section id="header">
-        <div class="linha"></div>
+        
+        <a href="#header"><img src="images/logo mural.png" id="logo"></a>
+        
+        <div id="search-group">
+            <input type="text" id="pesquisar" placeholder="Busque uma frase..."></input>
+            <i class="fa-solid fa-magnifying-glass lupa"></i>
+        </div>
+        
         <nav id="menu">
             <ul>
                 <li><a href="perfil.html">Perfil</a></li>
-                <li><a>Temas</a></li>
             </ul>
         </nav>
-        <input type="text" id="pesquisar" placeholder="Busque uma frase..."></input>
-        <a href=""><i class="fa-solid fa-magnifying-glass lupa"></i></a>
-        <a href="#header"><img src="images/logo mural.png" id="logo"></a>   
+        
+        <div class="linha"></div>
     </section>
+
+    <aside id="ranking-sidebar">
+        <h2><i class="fa-solid fa-trophy"></i> Top Frases</h2>
+        
+        <table class="tabela-ranking">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Frase</th>
+                    <th>Curtidas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="ranking-lider">
+                    <td>1º</td>
+                    <td>Seja a mudança que você deseja ver no mundo.</td>
+                    <td>120</td>
+                </tr>
+                <tr>
+                    <td>2º</td>
+                    <td>A felicidade está nas coisas simples.</td>
+                    <td>95</td>
+                </tr>
+                <tr>
+                    <td>3º</td>
+                    <td>Não desista dos seus sonhos.</td>
+                    <td>88</td>
+                </tr>
+                <tr>
+                    <td>4º</td>
+                    <td>O hoje é uma dádiva.</td>
+                    <td>71</td>
+                </tr>
+                <tr>
+                    <td>5º</td>
+                    <td>Siga em frente com fé.</td>
+                    <td>65</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <p class="ranking-info">Última atualização: 30/09/2025</p>
+    </aside>
 
     <section id="postagens">
         <h1 style="color: #764300;" class="hum">Mural de Frases</h1>
+        
+        <div class="postagem">
+            <h6>Nome do usuário</h6>
+            <textarea class="caixa-postar" placeholder="O que te inspira hoje?" rows="3"></textarea>
+            <div class="container-botao-postar">
+                <button class="botao-postar">Postar</button>
+            </div>
+        </div>
+        
         <div id="container-filtro">
             <i class="fa-solid fa-filter"></i>
         </div>
-        <div class="postagem">
-            <h4>Nome do usuário</h4>
-            <span class="linha1"></span>
-            <form method="post" action="">
-                <textarea name="nome" class="caixa-postar" maxlength="250" placeholder="Compartilhe sua frase..."></textarea>
-                <div class="container-botao-postar">
-                    <button type="submit" style="align-self: flex-end; margin-top: 5px;" onclick="postar()">Postar</button>
-                </div>
-            </form>
 
+        <div class="row">
+            <div class="column">
+                <div>
+                    <h6>Nome do usuário</h6>
+                    <textarea readonly>Não espere por oportunidades extraordinárias. Agarre ocasiões comuns e as torne grandes.</textarea>
+                    <span class="linha3"></span>
+                    <div class="horario-curtidas">
+                        <i class="fa-solid fa-heart coracao"></i>
+                        <h5>22/09/2025</h5>
+                        <h6>14:30</h6>
+                    </div>
+                </div>
+                <div>
+                    <h6>Nome do usuário</h6>
+                    <textarea readonly>A felicidade está nas coisas simples, basta olhar com atenção.</textarea>
+                    <span class="linha3"></span>
+                    <div class="horario-curtidas">
+                        <i class="fa-solid fa-heart coracao"></i>
+                        <h5>20/09/2025</h5>
+                        <h6>10:15</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div>
+                    <h6>Nome do usuário</h6>
+                    <textarea readonly>A mente é como um paraquedas, só funciona se estiver aberta.</textarea>
+                    <span class="linha3"></span>
+                    <div class="horario-curtidas">
+                        <i class="fa-solid fa-heart coracao"></i>
+                        <h5>21/09/2025</h5>
+                        <h6>18:00</h6>
+                    </div>
+                </div>
+                <div>
+                    <h6>Nome do usuário</h6>
+                    <textarea readonly>Seja a mudança que você deseja ver no mundo. Isso começa em você.</textarea>
+                    <span class="linha3"></span>
+                    <div class="horario-curtidas">
+                        <i class="fa-solid fa-heart coracao"></i>
+                        <h5>19/09/2025</h5>
+                        <h6>09:45</h6>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row"> 
-            <div class="column">
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column">
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly name="" id=""></textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>DD/MM/AAAA</h5>
-                        <h6>HH:MM</h6>
-                </div>
-            </div>
 
         <div class="linha2"></div>
     </section>
