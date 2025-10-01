@@ -89,3 +89,8 @@ body {
 }
 
 .btn-cadastro:hover { background-color: #916834; }
+
+a{
+    color: inherit;
+    text-decoration: none;
+}
