@@ -1,3 +1,7 @@
+*{
+    font-family: "Happy Monkey", sans-serif;
+}
+
 /* Paleta de Cores (IGUAL à tela de Login/Cadastro) */
 :root {
     --cor-fundo-pagina: #764300; /* Marrom Escuro */
