@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for
 import mysql.connector
 
 app = Flask(__name__)
 
-# Função para conectar ao banco de dados
 def conectar_db():
     return mysql.connector.connect(
         user='root',
@@ -13,12 +11,10 @@ def conectar_db():
         host='127.0.0.1'
     )
 
-# Rota principal: tela de login (mostra primeiro ao abrir o site)
 @app.route("/")
 def tela_login():
     return render_template("index.html")
 
-# Rota para cadastro (GET = exibe o formulário, POST = salva no banco)
 @app.route("/cadastro", methods=["GET", "POST"])
 def cadastro():
     if request.method == "POST":
@@ -36,7 +32,6 @@ def cadastro():
             cursor.execute(sql, (nome_usuario, senha))
             conn.commit()
 
-            # Após cadastro, redireciona para a tela de login
             return redirect(url_for("tela_login"))
 
         except mysql.connector.Error as err:
@@ -51,7 +46,6 @@ def cadastro():
     else:
         return render_template("cadastro.html")
 
-# Rota para login (POST)
 @app.route("/login", methods=["POST"])
 def login():
     nome_usuario = request.form.get("nome_usuario", "").strip()
@@ -85,7 +79,6 @@ def login():
 
 if __name__ == "__main__":
     app.run(debug=True)
-=======
 from flask import Flask, render_template, request
 import mysql.connector
 
@@ -133,4 +126,3 @@ def cadastro():
 
 if __name__ == "__main__":
     app.run(debug=True)
->>>>>>> 07cd6b4f690f4d00f9a608ddd9e937c438b8e361
