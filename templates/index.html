@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Mural de Frases</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body style="background-image: url(/static/images/fundo.png);">
+
+    <main class="container">
+        <section class="login-card">
+            
+            <div class="logo">
+                <img src="/static/images/logo mural.png" alt="Logo" class="logo-img">
+            </div>
+            
+            <h1>Login</h1>
+            
+            <form action="/login" method="POST">
+                <div class="campo">
+                    <label for="nome_usuario">Nome de usuário</label>
+                    <input type="text" id="nome_usuario" name="nome_usuario" required>
+                </div>
+
+                <div class="campo">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+
+                <button type="submit" class="btn-acessar">Acessar</button>
+            </form>
+            
+            <div class="cadastro-area">
+                <p>Cadastre-se se não tiver uma conta registrada</p>
+                <a href="/cadastro" class="btn-cadastro">Cadastre-se</a>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
