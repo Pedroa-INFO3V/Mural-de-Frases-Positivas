@@ -15,8 +15,8 @@
 body {
     margin: 0;
     padding: 0;
-    color: var(--cor-texto);
-    background-color: var(--cor-fundo-pagina); 
+    color: #333;
+    background-color: #764300; 
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -25,7 +25,7 @@ body {
 }
 
 .cadastro-card {
-    background-color: var(--cor-card-fundo); 
+    background-color: #ffcc00; 
     border: none;
     padding: 90px 80px; 
     height: 100vh;
@@ -39,21 +39,36 @@ body {
 .logo { 
     margin-bottom: 20px; 
 }
+
 .logo-img { 
-    width: 250px; height: auto; display: block; margin: 0 auto; 
+    width: 250px; 
+    height: auto; 
+    display: block; 
+    margin: 0 auto; 
 }
+
 .cadastro-card h1 { 
-    font-size: 2.5em; margin-top: 20px; margin-bottom: 10px; 
+    font-size: 2.5em; 
+    margin-top: 20px; 
+    margin-bottom: 10px; 
 }
+
 .cadastro-card p { 
-    color: #555; margin-bottom: 30px; 
+    color: #555; 
+    margin-bottom: 30px; 
 }
+
 .campo { 
-    text-align: left; margin-bottom: 25px; 
+    text-align: left; 
+    margin-bottom: 25px; 
 }
+
 .campo label { 
-    display: block; font-weight: bold; margin-bottom: 8px; 
+    display: block; 
+    font-weight: bold; 
+    margin-bottom: 8px; 
 }
+
 .campo input {
     width: 100%;
     padding: 15px 10px;
@@ -63,10 +78,10 @@ body {
     font-size: 1.1em;
 }
 .campo input:focus { 
-    border-color: var(--cor-destaque); outline: none; 
+    border-color: #916834; outline: none; 
 }
 .btn-cadastrar {
-    background-color: var(--cor-botao-marrom);
+    background-color: #764300;
     color: white;
     border: none;
     padding: 15px 40px;
@@ -80,7 +95,7 @@ body {
     transition: background-color 0.2s;
 }
 .btn-cadastrar:hover { 
-    background-color: var(--cor-destaque); 
+    background-color: #916834; 
 }
 .login-area { 
     margin-top: 0; 
@@ -88,9 +103,9 @@ body {
 .link-login {
     display: block;
     font-size: 0.9em;
-    color: var(--cor-texto);
+    color: #333;
     text-decoration: underline;
 }
 .link-login:hover { 
-    color: var(--cor-destaque); 
+    color: #916834; 
 }
