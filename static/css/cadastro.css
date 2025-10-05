@@ -4,14 +4,6 @@
     font-family: "Happy Monkey", sans-serif;
 }
 
-:root {
-    --cor-fundo-pagina: #764300; 
-    --cor-card-fundo: #ffcc00; 
-    --cor-botao-marrom: #764300;
-    --cor-texto: #333; 
-    --cor-destaque: #916834; 
-}
-
 body {
     margin: 0;
     padding: 0;
