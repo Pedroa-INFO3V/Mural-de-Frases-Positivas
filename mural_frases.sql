@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `mural_frases` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `mural_frases`;
 -- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: localhost    Database: mural_frases
+-- Host: 127.0.0.1    Database: mural_frases
 -- ------------------------------------------------------
 -- Server version	8.0.43
 
@@ -59,7 +57,7 @@ CREATE TABLE `frases` (
   PRIMARY KEY (`id`),
   KEY `fk_frase_usuario_idx` (`usuario_id`),
   CONSTRAINT `fk_frase_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,30 +66,8 @@ CREATE TABLE `frases` (
 
 LOCK TABLES `frases` WRITE;
 /*!40000 ALTER TABLE `frases` DISABLE KEYS */;
+INSERT INTO `frases` VALUES (1,1,'abc','2025-10-05 22:44:28'),(2,1,'oi fofuxos','2025-10-05 22:49:15'),(3,1,'oie','2025-10-05 22:49:28'),(4,2,'oie','2025-10-05 22:54:31'),(5,1,'oie','2025-10-05 23:06:24');
 /*!40000 ALTER TABLE `frases` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `negocio`
---
-
-DROP TABLE IF EXISTS `negocio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `negocio` (
-  `aejvnn3we` int NOT NULL,
-  `enkww` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`aejvnn3we`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `negocio`
---
-
-LOCK TABLES `negocio` WRITE;
-/*!40000 ALTER TABLE `negocio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `negocio` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -107,7 +83,7 @@ CREATE TABLE `usuarios` (
   `senha` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nome_usuario_UNIQUE` (`nome_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +92,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'a','a'),(2,'b','b');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -128,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-30 23:41:02
+-- Dump completed on 2025-10-05 23:10:23

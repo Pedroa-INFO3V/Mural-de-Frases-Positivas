@@ -23,7 +23,7 @@
         
         <nav id="menu">
             <ul>
-                <li><a href="perfil.html">Perfil</a></li>
+                <li><a href="{{ url_for('perfil', nome=nome_usuario) }}">Perfil</a></li>
             </ul>
         </nav>
         
@@ -76,64 +76,49 @@
     <section id="postagens">
         <h1 style="color: #764300;" class="hum">Mural de Frases</h1>
         
-        <div class="postagem">
-            <h6>Nome do usuário</h6>
-            <textarea class="caixa-postar" placeholder="O que te inspira hoje?" rows="3"></textarea>
+        <form class="postagem" method="POST" action="{{ url_for('postar_frase', nome=nome_usuario) }}">
+            <h6>Olá, {{ nome_usuario }}</h6>
+            <textarea 
+                class="caixa-postar" 
+                name="conteudo_frase" 
+                placeholder="O que te inspira hoje?" 
+                rows="3" 
+                required
+            ></textarea>
             <div class="container-botao-postar">
-                <button class="botao-postar">Postar</button>
+                <button class="botao-postar" type="submit">Postar</button>
             </div>
-        </div>
+        </form>
         
         <div id="container-filtro">
             <i class="fa-solid fa-filter"></i>
         </div>
 
         <div class="row">
-            <div class="column">
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly>Não espere por oportunidades extraordinárias. Agarre ocasiões comuns e as torne grandes.</textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>22/09/2025</h5>
-                        <h6>14:30</h6>
-                    </div>
-                </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly>A felicidade está nas coisas simples, basta olhar com atenção.</textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>20/09/2025</h5>
-                        <h6>10:15</h6>
-                    </div>
-                </div>
-            </div>
+            {% for frase in frases %}
+                {% if loop.index % 2 != 0 %}
+                    <div class="column">
+                {% endif %}
 
-            <div class="column">
                 <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly>A mente é como um paraquedas, só funciona se estiver aberta.</textarea>
+                    <h6>{{ frase.autor }}</h6>
+                    <textarea readonly>{{ frase.texto_frase }}</textarea>
                     <span class="linha3"></span>
                     <div class="horario-curtidas">
                         <i class="fa-solid fa-heart coracao"></i>
-                        <h5>21/09/2025</h5>
-                        <h6>18:00</h6>
+                        <h5>{{ frase.curtidas_count }} curtidas</h5>
+                        <h6>{{ frase.data_postagem.strftime('%d/%m/%Y %H:%M') }}</h6>
                     </div>
                 </div>
-                <div>
-                    <h6>Nome do usuário</h6>
-                    <textarea readonly>Seja a mudança que você deseja ver no mundo. Isso começa em você.</textarea>
-                    <span class="linha3"></span>
-                    <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
-                        <h5>19/09/2025</h5>
-                        <h6>09:45</h6>
+
+                {% if loop.index % 2 == 0 or loop.last %}
                     </div>
-                </div>
-            </div>
+                {% endif %}
+            {% endfor %}
+
+            {% if not frases %}
+                <p>Nenhuma frase encontrada. Seja o primeiro a postar!</p>
+            {% endif %}
         </div>
 
         <div class="linha2"></div>
@@ -146,9 +131,9 @@
             <nav id="mapa">
                 <ul>
                     <li><a href="#hero">Começo</a></li>
-                    <li><a href="perfil.html">Perfil</a></li>
-                    <li><a href="cadastro.html">Cadastro</a></li>
-                    <li><a href="index.html">Login</a></li>
+                    <li><a href="{{ url_for('perfil', nome=nome_usuario) }}">Perfil</a></li>
+                    <li><a href="{{ url_for('cadastro') }}">Cadastro</a></li>
+                    <li><a href="{{ url_for('tela_login') }}">Login</a></li>
                 </ul>
 
             </nav>
