@@ -18,6 +18,8 @@
 --
 -- Table structure for table `curtidas`
 --
+CREATE DATABASE setembroAmarelo;
+USE setembroAmarelo;
 
 DROP TABLE IF EXISTS `curtidas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
