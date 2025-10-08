@@ -10,7 +10,7 @@ def conectar_db():
     try:
         return connection.MySQLConnection(
             user='root',
-            password='sy68p014',
+            password='labinfo',
             database='setembroAmarelo',
             host='127.0.0.1'
         )
