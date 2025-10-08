@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: localhost    Database: mural_frases
+-- Host: localhost    Database: setembroamarelo
 -- ------------------------------------------------------
--- Server version	8.0.36
+-- Server version	8.0.43
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,9 +18,6 @@
 --
 -- Table structure for table `curtidas`
 --
-
-CREATE database setembroAmarelo;
-USE setembroAmarelo;
 
 DROP TABLE IF EXISTS `curtidas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -60,7 +57,7 @@ CREATE TABLE `frases` (
   PRIMARY KEY (`id`),
   KEY `fk_frase_usuario_idx` (`usuario_id`),
   CONSTRAINT `fk_frase_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +66,6 @@ CREATE TABLE `frases` (
 
 LOCK TABLES `frases` WRITE;
 /*!40000 ALTER TABLE `frases` DISABLE KEYS */;
-INSERT INTO `frases` VALUES (1,1,'abc','2025-10-05 22:44:28'),(2,1,'oi fofuxos','2025-10-05 22:49:15'),(3,1,'oie','2025-10-05 22:49:28'),(4,2,'oie','2025-10-05 22:54:31'),(5,1,'oie','2025-10-05 23:06:24'),(6,3,'não desista dos seus sonhos','2025-10-06 15:01:05');
 /*!40000 ALTER TABLE `frases` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +82,7 @@ CREATE TABLE `usuarios` (
   `senha` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nome_usuario_UNIQUE` (`nome_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +91,6 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'a','a'),(2,'b','b'),(3,'chiquinho','777');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -108,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-06 15:06:37
+-- Dump completed on 2025-10-08  0:42:37

@@ -17,6 +17,10 @@
             
             <h1>Login</h1>
             
+            {% if mensagem %}
+                <p style="color: red; margin-bottom: 15px;">{{ mensagem }}</p>
+            {% endif %}
+
             <form action="/login" method="POST">
                 <div class="campo">
                     <label for="nome_usuario">Nome de usuário</label>
@@ -33,7 +37,7 @@
             
             <div class="cadastro-area">
                 <p>Cadastre-se se não tiver uma conta registrada</p>
-                <a href="/cadastro" class="btn-cadastro">Cadastre-se</a>
+                <a href="{{ url_for('cadastro') }}" class="btn-cadastro">Cadastre-se</a>
             </div>
         </section>
     </main>

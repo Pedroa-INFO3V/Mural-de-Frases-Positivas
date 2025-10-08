@@ -14,16 +14,12 @@
     
     <section id="header">
         
-        <a href="#header"><img src="/static/images/logo mural.png" id="logo"></a>
-        
-        <div id="search-group">
-            <input type="text" id="pesquisar" placeholder="Busque uma frase..."></input>
-            <i class="fa-solid fa-magnifying-glass lupa"></i>
-        </div>
+        <a href="{{ url_for('mural') }}"><img src="/static/images/logo mural.png" id="logo"></a>
         
         <nav id="menu">
             <ul>
                 <li><a href="{{ url_for('perfil', nome=nome_usuario) }}">Perfil</a></li>
+                <li><a href="{{ url_for('logout') }}">Sair</a></li>
             </ul>
         </nav>
         
@@ -42,41 +38,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="ranking-lider">
-                    <td>1º</td>
-                    <td>Seja a mudança que você deseja ver no mundo.</td>
-                    <td>120</td>
-                </tr>
+                {% for frase_ranking in ranking %}
                 <tr>
-                    <td>2º</td>
-                    <td>A felicidade está nas coisas simples.</td>
-                    <td>95</td>
+                    <td>{{ loop.index }}º</td>
+                    <td>{{ frase_ranking.texto_frase[:35] }}...</td> 
+                    <td>{{ frase_ranking.curtidas_count }}</td>
                 </tr>
+                {% else %}
                 <tr>
-                    <td>3º</td>
-                    <td>Não desista dos seus sonhos.</td>
-                    <td>88</td>
+                    <td colspan="3" style="text-align: center;">Nenhuma frase no ranking ainda.</td>
                 </tr>
-                <tr>
-                    <td>4º</td>
-                    <td>O hoje é uma dádiva.</td>
-                    <td>71</td>
-                </tr>
-                <tr>
-                    <td>5º</td>
-                    <td>Siga em frente com fé.</td>
-                    <td>65</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
         
-        <p class="ranking-info">Última atualização: 30/09/2025</p>
+        <p class="ranking-info">O ranking é atualizado em tempo real.</p>
     </aside>
 
     <section id="postagens">
         <h1 style="color: #764300;" class="hum">Mural de Frases</h1>
         
-        <form class="postagem" method="POST" action="{{ url_for('postar_frase', nome=nome_usuario) }}">
+        <form class="postagem" method="POST" action="{{ url_for('postar_frase') }}"> 
             <h6>Olá, {{ nome_usuario }}</h6>
             <textarea 
                 class="caixa-postar" 
@@ -89,10 +71,6 @@
                 <button class="botao-postar" type="submit">Postar</button>
             </div>
         </form>
-        
-        <div id="container-filtro">
-            <i class="fa-solid fa-filter"></i>
-        </div>
 
         <div class="row">
             {% for frase in frases %}
@@ -105,7 +83,12 @@
                     <textarea readonly>{{ frase.texto_frase }}</textarea>
                     <span class="linha3"></span>
                     <div class="horario-curtidas">
-                        <i class="fa-solid fa-heart coracao"></i>
+                        <form action="{{ url_for('curtir_frase', frase_id=frase.id) }}" method="POST" style="display: inline;">
+                            <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                <i class="fa-solid fa-heart coracao"></i>
+                            </button>
+                        </form>
+                        
                         <h5>{{ frase.curtidas_count }} curtidas</h5>
                         <h6>{{ frase.data_postagem.strftime('%d/%m/%Y %H:%M') }}</h6>
                     </div>
@@ -130,7 +113,7 @@
             <h2 class="footer2">Mapa</h2>
             <nav id="mapa">
                 <ul>
-                    <li><a href="#hero">Começo</a></li>
+                    <li><a href="{{ url_for('mural') }}">Mural</a></li>
                     <li><a href="{{ url_for('perfil', nome=nome_usuario) }}">Perfil</a></li>
                     <li><a href="{{ url_for('cadastro') }}">Cadastro</a></li>
                     <li><a href="{{ url_for('tela_login') }}">Login</a></li>

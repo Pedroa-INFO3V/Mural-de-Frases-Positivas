@@ -1,36 +1,63 @@
-from flask import Flask, render_template, request, redirect, url_for
-from mysql.connector import (connection)
+from flask import Flask, render_template, request, redirect, url_for, session, flash 
+from mysql.connector import connection, Error as MySQLError
 from datetime import datetime
+from functools import wraps
 
 app = Flask(__name__)
+app.secret_key = 'galadinhos.com' 
 
 def conectar_db():
-    return connection.MySQLConnection(
-        user='root',
-        password='sy68p014',
-        database='setembroAmarelo',
-        host='127.0.0.1'
-    )
-
-def get_user_id_by_name(nome_usuario):
     try:
-        conn = conectar_db()
-        cursor = conn.cursor()
-        sql = "SELECT id FROM usuarios WHERE nome_usuario = %s"
-        cursor.execute(sql, (nome_usuario,))
-        user_id = cursor.fetchone()
-        return user_id[0] if user_id else None
-    except Exception as e:
-        return None
-    finally:
-        try:
-            cursor.close()
-            conn.close()
-        except:
-            pass
+        return connection.MySQLConnection(
+            user='root',
+            password='sy68p014',
+            database='setembroAmarelo',
+            host='127.0.0.1'
+        )
+    except MySQLError as err:
+        print(f"ERRO DE CONEXÃO CRÍTICO: {err}")
+        return None 
 
-@app.route("/")
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            return redirect(url_for('tela_login')) 
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route("/", methods=["GET", "POST"])
+@app.route("/login", methods=["POST"])
 def tela_login():
+    if request.method == "POST":
+        nome_usuario = request.form.get("nome_usuario", "").strip()
+        senha = request.form.get("senha", "")
+        
+        conn = conectar_db()
+        if not conn:
+             return render_template("index.html", mensagem="Erro crítico de conexão com o banco de dados.")
+        
+        cursor = None
+        try:
+            cursor = conn.cursor(dictionary=True) 
+            sql = "SELECT id, nome_usuario FROM usuarios WHERE nome_usuario = %s AND senha = %s"
+            cursor.execute(sql, (nome_usuario, senha))
+            usuario = cursor.fetchone()
+
+            if usuario:
+                session['user_id'] = usuario['id']
+                session['nome_usuario'] = usuario['nome_usuario']
+                return redirect(url_for("mural"))
+            else:
+                return render_template("index.html", mensagem="Usuário ou senha inválidos.")
+
+        except MySQLError as err:
+            print(f"Erro de DB no Login: {err}")
+            return render_template("index.html", mensagem="Erro interno ao tentar fazer login.")
+        finally:
+            if cursor: cursor.close()
+            if conn: conn.close()
+
     return render_template("index.html")
 
 @app.route("/cadastro", methods=["GET", "POST"])
@@ -38,152 +65,183 @@ def cadastro():
     if request.method == "POST":
         nome_usuario = request.form.get("nome_usuario", "").strip()
         senha = request.form.get("senha", "")
-
+        
         if not nome_usuario or not senha:
-            return render_template("cadastro.html", mensagem="Preencha nome e senha.")
+            return render_template("cadastro.html", mensagem="Preencha todos os campos.")
 
+        conn = conectar_db()
+        if not conn: return render_template("cadastro.html", mensagem="Erro crítico de conexão com o banco de dados.")
+
+        cursor = None
         try:
-            conn = conectar_db()
             cursor = conn.cursor()
-
             sql = "INSERT INTO usuarios (nome_usuario, senha) VALUES (%s, %s)"
             cursor.execute(sql, (nome_usuario, senha))
             conn.commit()
             
-            return redirect(url_for("tela_login"))
+            return render_template ("index.html")
 
-        except mysql.connector.Error as err:
-            return render_template("cadastro.html", mensagem=f"Erro ao cadastrar: {err}")
-
+        except MySQLError as err:
+            if err.errno == 1062: 
+                return render_template("cadastro.html", mensagem="Nome de usuário já existe.")
+            
+            print(f"ERRO DE DB NO CADASTRO: {err}")
+            return render_template("cadastro.html", mensagem="Erro interno ao tentar cadastrar.")
+            
         finally:
-            try:
-                cursor.close()
-                conn.close()
-            except:
-                pass
-    else:
-        return render_template("cadastro.html")
+            if cursor: cursor.close()
+            if conn: conn.close()
 
-@app.route("/login", methods=["POST"])
-def login():
-    nome_usuario = request.form.get("nome_usuario", "").strip()
-    senha = request.form.get("senha", "")
+    return render_template("cadastro.html")
 
-    if not nome_usuario or not senha:
-        return render_template("index.html", mensagem="Preencha nome e senha para entrar.")
+# --- Rota para Postar Frase, Mural, Curtir, Perfil e Logout (O mesmo que antes) ---
 
+@app.route("/postar_frase", methods=["POST"])
+@login_required
+def postar_frase():
+    user_id = session['user_id']
+    conteudo_frase = request.form.get("conteudo_frase", "").strip() 
+    
+    if not conteudo_frase:
+        return redirect(url_for('mural')) 
+    
+    conn = conectar_db()
+    if not conn: return redirect(url_for('mural')) 
+    
+    cursor = None
     try:
-        conn = conectar_db()
-        cursor = conn.cursor(dictionary=True)
-
-        sql = "SELECT nome_usuario FROM usuarios WHERE nome_usuario = %s AND senha = %s"
-        cursor.execute(sql, (nome_usuario, senha))
-        usuario = cursor.fetchone()
-
-        if usuario:
-            return redirect(url_for("mural", nome=usuario['nome_usuario']))
-        else:
-            return render_template("index.html", mensagem="Usuário ou senha inválidos.")
-
-    except mysql.connector.Error as err:
-        return render_template("index.html", mensagem=f"Erro ao tentar login: {err}")
-
+        cursor = conn.cursor()
+        sql = "INSERT INTO frases (usuario_id, conteudo, data_postagem) VALUES (%s, %s, %s)"
+        cursor.execute(sql, (user_id, conteudo_frase, datetime.now())) 
+        conn.commit()
+        
+    except MySQLError as err:
+        print(f"ERRO AO POSTAR FRASE: {err}")
+        
     finally:
-        try:
-            cursor.close()
-            conn.close()
-        except:
-            pass
+        if cursor: cursor.close()
+        if conn: conn.close()
+        
+    return redirect(url_for("mural"))
 
-@app.route("/mural/<nome>")
-def mural(nome):
+@app.route("/mural")
+@login_required
+def mural():
+    conn = conectar_db()
+    if not conn:
+        return render_template("principal.html", nome_usuario=session.get('nome_usuario', 'Usuário'), frases=[], ranking=[], mensagem_erro="Erro ao conectar ao banco de dados.")
+    
+    cursor = None
+    frases = []
+    ranking = []
+    
     try:
-        conn = conectar_db()
-        cursor = conn.cursor(dictionary=True) 
-
+        cursor = conn.cursor(dictionary=True)
+        
         sql_frases = """
             SELECT 
-                f.id,
-                f.conteudo AS texto_frase, 
-                u.nome_usuario AS autor, 
+                f.id, 
+                f.conteudo AS texto_frase,     
                 f.data_postagem, 
-                COALESCE(SUM(c.quantidade), 0) AS curtidas_count
+                u.nome_usuario AS autor,
+                COUNT(c.frase_id) AS curtidas_count  
             FROM frases f
-            JOIN usuarios u ON f.usuario_id = u.id
+            JOIN usuarios u ON f.usuario_id = u.id   
             LEFT JOIN curtidas c ON f.id = c.frase_id
-            GROUP BY f.id, f.conteudo, u.nome_usuario, f.data_postagem
-            ORDER BY f.data_postagem DESC
+            GROUP BY f.id, f.conteudo, f.data_postagem, u.nome_usuario
+            ORDER BY f.data_postagem DESC;
         """
         cursor.execute(sql_frases)
         frases = cursor.fetchall()
+
+        sql_ranking = """
+            SELECT 
+                f.conteudo AS texto_frase,     
+                u.nome_usuario AS autor,
+                COUNT(c.frase_id) AS curtidas_count  
+            FROM frases f
+            JOIN usuarios u ON f.usuario_id = u.id   
+            LEFT JOIN curtidas c ON f.id = c.frase_id
+            GROUP BY f.id, f.conteudo, u.nome_usuario
+            ORDER BY curtidas_count DESC
+            LIMIT 5; 
+        """
+        cursor.execute(sql_ranking)
+        ranking = cursor.fetchall()
         
-        return render_template("principal.html", frases=frases, nome_usuario=nome)
-
-    except mysql.connector.Error as err:
-        return render_template("principal.html", frases=[], nome_usuario=nome)
-    
+    except MySQLError as err:
+        print(f"ERRO AO BUSCAR FRASES NO MURAL: {err}")
+        
     finally:
-        try:
-            cursor.close()
-            conn.close()
-        except:
-            pass
-
-@app.route("/postar_frase/<nome>", methods=["POST"])
-def postar_frase(nome):
-    conteudo = request.form.get("conteudo_frase", "").strip()
+        if cursor: cursor.close()
+        if conn: conn.close()
     
-    if not conteudo:
-        return redirect(url_for("mural", nome=nome))
+    return render_template(
+        "principal.html", 
+        nome_usuario=session['nome_usuario'], 
+        frases=frases,
+        ranking=ranking
+    )
 
-    usuario_id = get_user_id_by_name(nome)
+@app.route("/curtir/<int:frase_id>", methods=["POST"])
+@login_required
+def curtir_frase(frase_id):
+    user_id = session['user_id']
+    conn = conectar_db()
+    if not conn: return redirect(url_for('mural')) 
     
-    if usuario_id is None:
-        return redirect(url_for("tela_login"))
-
+    cursor = None
     try:
-        conn = conectar_db()
         cursor = conn.cursor()
         
-        sql = "INSERT INTO frases (usuario_id, conteudo, data_postagem) VALUES (%s, %s, NOW())"
-        cursor.execute(sql, (usuario_id, conteudo))
+        sql_check = "SELECT usuario_id FROM curtidas WHERE usuario_id = %s AND frase_id = %s"
+        cursor.execute(sql_check, (user_id, frase_id))
+        curtida_existe = cursor.fetchone()
+        
+        if curtida_existe:
+            sql_action = "DELETE FROM curtidas WHERE usuario_id = %s AND frase_id = %s"
+        else:
+            sql_action = "INSERT INTO curtidas (usuario_id, frase_id) VALUES (%s, %s)"
+            
+        cursor.execute(sql_action, (user_id, frase_id))
         conn.commit()
         
-    except mysql.connector.Error as err:
-        pass
-
+    except MySQLError as err:
+        print(f"ERRO AO CURTIR: {err}")
+        
     finally:
-        try:
-            cursor.close()
-            conn.close()
-        except:
-            pass
-            
-    return redirect(url_for("mural", nome=nome))
-            
+        if cursor: cursor.close()
+        if conn: conn.close()
+        
+    return redirect(url_for("mural"))
+
 @app.route("/perfil/<nome>")
+@login_required
 def perfil(nome):
-    usuario_id = get_user_id_by_name(nome)
-    
-    if usuario_id is None:
-        return redirect(url_for("tela_login"))
+    if session['nome_usuario'] != nome:
+        return redirect(url_for('perfil', nome=session['nome_usuario']))
+
+    usuario_id = session['user_id'] 
     
     frases_usuario = []
-    total_frases = 0
     total_curtidas = 0
+    conn = conectar_db()
+    if not conn:
+         return render_template("perfil.html", nome_usuario=nome, total_frases=0, total_curtidas=0, frases=[])
+
+    cursor = None
     
     try:
-        conn = conectar_db()
         cursor = conn.cursor(dictionary=True)
 
         sql_frases = """
             SELECT 
-                f.conteudo AS texto_frase, 
+                f.conteudo AS texto_frase,    
                 f.data_postagem, 
-                COALESCE(SUM(c.quantidade), 0) AS curtidas_count
+                COUNT(c.frase_id) AS curtidas_count
             FROM frases f
             LEFT JOIN curtidas c ON f.id = c.frase_id
-            WHERE f.usuario_id = %s
+            WHERE f.usuario_id = %s               
             GROUP BY f.id, f.conteudo, f.data_postagem
             ORDER BY f.data_postagem DESC
         """
@@ -192,22 +250,27 @@ def perfil(nome):
         
         total_frases = len(frases_usuario)
         total_curtidas = sum(f.get('curtidas_count', 0) for f in frases_usuario)
+
+    except MySQLError as err:
+        print(f"ERRO DE DB NO PERFIL: {err}")
         
-    except mysql.connector.Error as err:
-        pass
-
     finally:
-        try:
-            cursor.close()
-            conn.close()
-        except:
-            pass
-            
-    return render_template("perfil.html", 
-                           nome_usuario=nome,
-                           frases=frases_usuario,
-                           total_frases=total_frases,
-                           total_curtidas=total_curtidas)
+        if cursor: cursor.close()
+        if conn: conn.close()
+        
+    return render_template(
+        "perfil.html",
+        nome_usuario=nome,
+        total_frases=total_frases,
+        total_curtidas=total_curtidas,
+        frases=frases_usuario
+    )
 
-if __name__ == "__main__":
+@app.route("/logout")
+def logout():
+    session.pop('user_id', None)
+    session.pop('nome_usuario', None)
+    return redirect(url_for('tela_login'))
+
+if __name__ == '__main__':
     app.run(debug=True)

@@ -20,6 +20,10 @@
             
             <h1>Cadastro</h1> 
             <p>Registre-se para compartilhar sua inspiração!</p>
+            
+            {% if mensagem %}
+                <p style="color: red; margin-bottom: 15px;">{{ mensagem }}</p>
+            {% endif %}
 
             <form action="/cadastro" method="POST">
                 
@@ -37,7 +41,7 @@
             </form>
             
             <div class="login-area">
-                <a href="/" class="link-login">Já tem uma conta? Faça Login</a>
+                <a href="{{ url_for('tela_login') }}" class="link-login">Já tem uma conta? Faça Login</a>
             </div>
         </section>
     </main>
