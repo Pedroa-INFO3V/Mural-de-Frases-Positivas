@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash 
+from flask import Flask, render_template, request, redirect, url_for, session
 from mysql.connector import connection, Error as MySQLError
 from datetime import datetime
 from functools import wraps
@@ -93,8 +93,6 @@ def cadastro():
             if conn: conn.close()
 
     return render_template("cadastro.html")
-
-# --- Rota para Postar Frase, Mural, Curtir, Perfil e Logout (O mesmo que antes) ---
 
 @app.route("/postar_frase", methods=["POST"])
 @login_required
